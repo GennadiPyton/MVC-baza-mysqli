@@ -1,23 +1,41 @@
 <?php
 
-class CModel {
+class CModel { // Create a class and move it to a variable
     public function GetData(){
-        $mysqli = new mysqli('localhost', 'root', '','blog');
-        //connect to mysqli
+        $host = '127.0.0.1';
+        $db = 'blog';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8';
 
-        if(mysqli_connect_errno()) {
-            print_f('Cоединение не установлено');
-            exit();
-        }
-        //gives an error message
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $opt = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,   
+        ];
+        $pdo = new PDO($dsn, $user, $pass, $opt);
 
-        $mysqli->set_charset('utf8');
-        //
+        $result = $pdo->query('SELECT * FROM news');
+        $arrayResult = $result->fetchAll();
 
-        $query = "Select * From News";
+        //$mysqli = new mysqli('localhost', 'root', '','blog');
+        // //connect to mysqli
 
-        $result = $mysqli->query($query);
-        $arrayResult = $result->fetch_all(MYSQLI_ASSOC);
+        // if(mysqli_connect_errno()) {
+        //     print_f('Cоединение не установлено');
+        //     exit();
+        // }
+        // //if not connectted mysqli
+
+        // $mysqli->set_charset('utf8');
+        // //Cyrillic check
+
+        // $query = "Select * From News";
+        // //query and select from table
+
+        // $result = $mysqli->query($query);
+        // $arrayResult = $result->fetch_all(MYSQLI_ASSOC);//result
 
 
         // $arrayResult[] = array(
